@@ -521,7 +521,8 @@ because paper 2's own kernel turns out to be the *degenerate* member of the fami
 is a (finite or compact Lie) group $G$, and corruption is **translation by a random group
 element** instead of replacement. The closest formal treatments found in this pass are a
 finite-group Fourier construction [A7] and the exact discrete-state analysis of [A5]; the
-applied instances are [A3]–[A4] (permutations), [A8] (cycles) and [A9]–[A13] (Lie groups).
+applied instances are the permutation-group model SymmetricDiffusers [A3] and its soft-rank
+follow-up [A4], the cycle-graph construction [A8], and the Lie-group models [A9]–[A13].
 
 #### The mechanism
 
@@ -591,14 +592,14 @@ with the member that discards the geometry it secretly has.
 | $\mathbb{Z}/K$ (cyclic) | circular / periodic values | local walk on the cycle | [A8] (discrete circle); theory [A7] |
 | $(\mathbb{Z}/2)^n$ (hypercube) | bits | bit flips (XOR) | Sohl-Dickstein 2015 (paper 1); theory [A6] |
 | $\mathbb{Z}$ (lattice) | ordered categories | discretized Gaussian | D3PM (paper 3) |
-| $S_n$ (symmetric group) | permutations / rankings | riffle shuffle, random-transposition walk | [A3]; follow-up [A4] |
+| $S_n$ (symmetric group) | permutations / rankings | riffle shuffle, random-transposition walk | SymmetricDiffusers [A3]; soft-rank [A4] |
 | finite abelian $G$ (general) | arbitrary finite labels | convolution semigroup | [A7] |
 | $SO(3)$, $SE(3)$, Lie groups (continuous) | rotations, poses, frames | heat / Brownian motion on the group | [A11], [A9], [A10], [A12], [A13] |
 
 #### Case study: $S_n$ (permutations)
 
 Learning a distribution over $S_n$ is the hardest common instance: $|S_n|=n!$ and the group is
-non-abelian. [A3] takes the direct route: the forward process is a **riffle shuffle**, a random
+non-abelian. SymmetricDiffusers [A3] takes the direct route: the forward process is a **riffle shuffle**, a random
 walk on the finite group $S_n$, and the diffusion length is chosen from the
 random-walk-on-finite-groups mixing theory for that walk; the reverse is a generalized
 Plackett–Luce distribution, provably more expressive than plain PL. The forward is therefore
