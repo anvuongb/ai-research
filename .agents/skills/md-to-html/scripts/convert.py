@@ -136,10 +136,11 @@ IGNORE: list[str] = []
 def load_ignore() -> list[str]:
     """Read optional ``.htmlignore`` patterns (relative to ROOT) from the root.
 
-    Blank lines and lines starting with ``#`` are ignored. Each remaining line is
-    matched with :func:`fnmatch.fnmatch` against a Markdown file's path relative
-    to ROOT (POSIX separators), and additionally against its first path component,
-    so a bare directory name excludes that whole subtree.
+    Blank lines and lines starting with ``#`` are ignored. A pattern containing
+    ``/`` is matched with :func:`fnmatch.fnmatch` against a Markdown file's path
+    relative to ROOT (POSIX separators); a pattern without ``/`` is matched
+    against each individual path component, so a bare ``data`` excludes any file
+    under a directory named ``data`` at any depth.
     """
     path = ROOT / ".htmlignore"
     if not path.is_file():
@@ -153,8 +154,18 @@ def load_ignore() -> list[str]:
 
 
 def is_ignored(rel: Path) -> bool:
+    """True if ``rel`` (relative to ROOT) matches any ``.htmlignore`` pattern.
+
+    A pattern containing ``/`` is matched against the full relative path; a pattern
+    without ``/`` is matched against every individual path component, so a bare
+    ``data`` excludes anything under a directory named ``data`` at any depth.
+    """
+    rel_posix = rel.as_posix()
     for pattern in IGNORE:
-        if fnmatch.fnmatch(rel.as_posix(), pattern) or fnmatch.fnmatch(rel.parts[0], pattern):
+        if "/" in pattern:
+            if fnmatch.fnmatch(rel_posix, pattern):
+                return True
+        elif any(fnmatch.fnmatch(part, pattern) for part in rel.parts):
             return True
     return False
 

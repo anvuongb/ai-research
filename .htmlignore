@@ -1,6 +1,14 @@
 # Paths excluded from the generated HTML site (fnmatch patterns, relative to the
-# build root). Each pattern is matched against a file's relative path and against
-# its first path component. One pattern per line; '#' starts a comment.
+# build root). A pattern containing '/' matches the full relative path; a pattern
+# without '/' matches any single path component. One pattern per line; '#' starts
+# a comment. Remove a line to publish that content again.
 
 # The repo operating contract is for agents, not the public docs site.
 AGENTS.md
+
+# Empty scaffold directories: publish their contents only when a topic actually
+# has something to show there.
+assets
+data
+experiments
+papers

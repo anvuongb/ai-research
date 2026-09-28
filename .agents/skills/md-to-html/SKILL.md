@@ -98,7 +98,8 @@ file://<abs-path-to-topic>/html/index.html
 - **Never hand-edit files under `html/`** — they are overwritten on the next run.
 - `html/` is generated output. Deleting it is safe; re-run the script to rebuild.
 - **Excluding files:** create a `.htmlignore` at the build root with one `fnmatch`
-  pattern per line (`#` starts a comment). Each pattern is matched against a file's
-  path relative to the root *and* against its first path component, so a bare
-  directory name excludes that whole subtree. Example: a multi-topic root can list
-  `AGENTS.md` in `.htmlignore` to keep the agent contract off the generated site.
+  pattern per line (`#` starts a comment). A pattern containing `/` is matched
+  against the file's full relative path; a pattern *without* `/` matches any path
+  component, so a bare `data` excludes every file under any directory named `data`.
+  Example: the repo root lists `AGENTS.md` and the empty scaffold dirs (`assets`,
+  `data`, `experiments`, `papers`) to keep them off the public site.
