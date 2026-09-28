@@ -1,0 +1,174 @@
+{
+  "topic": "group diffusion (structured discrete diffusion on group state spaces)",
+  "retrieved": "2026-09-27",
+  "provenance": {
+    "arxiv": "https://export.arxiv.org/api/query?id_list=... (per-ID lookup)",
+    "semanticscholar": "https://api.semanticscholar.org/graph/v1/paper/search/bulk (title/keyword search)",
+    "web": "Exa search over springer.com, iclr.cc, mlanthology.org; article page fetched for the finite-group Fourier paper",
+    "note": "IDs, venues, dates and citation counts are as returned by those endpoints on the retrieval date."
+  },
+  "records": [
+    {
+      "label": "A3",
+      "role": "discrete diffusion on the finite symmetric group S_n",
+      "title": "SymmetricDiffusers: Learning Discrete Diffusion on Finite Symmetric Groups",
+      "authors": ["Yongxing Zhang", "Donglin Yang", "Renjie Liao"],
+      "venue": "ICLR 2025 (Oral)",
+      "year": 2024,
+      "arxiv_id": "2410.02942",
+      "arxiv_version": "v2",
+      "doi": "10.48550/arXiv.2410.02942",
+      "s2_id": "a541288ed3336f561350407b2cb4b2f248373658",
+      "citation_count": 7,
+      "url": "https://arxiv.org/abs/2410.02942",
+      "notes": "Riffle shuffle as forward transition; diffusion length guided by random-walk-on-finite-groups mixing theory; generalized Plackett-Luce reverse. Tasks: sorting 4-digit MNIST, jigsaw, TSP. Code: https://github.com/DSL-Lab/SymmetricDiffusers"
+    },
+    {
+      "label": "A4",
+      "role": "permutation diffusion follow-up (continuous lift of ranks)",
+      "title": "Learning Permutation Distributions via Reflected Diffusion on Ranks",
+      "authors": ["Sizhuang He", "Yangtian Zhang", "Shiyang Zhang", "David van Dijk"],
+      "venue": "ICML 2026",
+      "year": 2026,
+      "arxiv_id": "2603.17353",
+      "arxiv_version": "v2",
+      "url": "https://arxiv.org/abs/2603.17353",
+      "notes": "Soft-Rank Diffusion: replaces shuffle-based corruption with a soft-rank forward process; contextualized generalized Plackett-Luce reverse. Explicitly frames shuffle-based random walks on S_n as the prior art."
+    },
+    {
+      "label": "A5",
+      "role": "exact analysis of arbitrary discrete-state Markov forward processes",
+      "title": "Blackout Diffusion: Generative Diffusion Models in Discrete-State Spaces",
+      "authors": ["Javier E. Santos", "Zachary R. Fox", "Nicholas Lubbers", "Yen Ting Lin"],
+      "venue": "ICML 2023 (PMLR v202, pp. 9034-9059)",
+      "year": 2023,
+      "arxiv_id": "2305.11089",
+      "doi": "10.48550/arXiv.2305.11089",
+      "s2_id": "fb03154bbf1348e796f9a82b2372a7d5e7e4b45a",
+      "citation_count": 30,
+      "url": "https://arxiv.org/abs/2305.11089",
+      "notes": "Title on arXiv includes the 'Blackout Diffusion' prefix; PMLR lists it as 'Generative Diffusion Models in Discrete-State Spaces'. Derives exact (non-variational) reverse-time analysis for arbitrary discrete-state Markov forward processes."
+    },
+    {
+      "label": "A6",
+      "role": "convergence theory for discrete diffusion on the hypercube",
+      "title": "Convergence Analysis of Discrete Diffusion Model: Exact Implementation through Uniformization",
+      "authors": ["Hongrui Chen", "Lexing Ying"],
+      "year": 2024,
+      "arxiv_id": "2402.08095",
+      "arxiv_version": "v2",
+      "url": "https://arxiv.org/abs/2402.08095",
+      "notes": "CTMC formulation; uniformization algorithm; TV and KL guarantees for sampling any distribution on a hypercube (Z/2)^d."
+    },
+    {
+      "label": "A7",
+      "role": "core mathematics: convolution semigroups and Fourier diagonalization on finite groups",
+      "title": "Harmonic flows and Markov dynamics on finite groups via pseudo-differential operators",
+      "authors": ["Anselmo Torresblanca-Badillo", "Ronald Barrios-Garizao", "Ronny Quinonez-Martinez"],
+      "venue": "Journal of Pseudo-Differential Operators and Applications, 17(1), Article 18",
+      "year": 2026,
+      "doi": "10.1007/s11868-025-00759-7",
+      "url": "https://link.springer.com/article/10.1007/s11868-025-00759-7",
+      "open_access": true,
+      "notes": "Builds discrete diffusion on the finite abelian group Z_N via discrete Fourier analysis, convolution semigroups, negative definite functions and pseudo-differential operators; generators shown Feller, m-dissipative and self-adjoint. Explicitly notes extension to non-abelian finite groups as open because spectral diagonalization becomes harder."
+    },
+    {
+      "label": "A8",
+      "role": "cyclic-group instance (discrete circle)",
+      "title": "Markov processes on a circular lattice",
+      "authors": ["Sourav Majumdar"],
+      "year": 2026,
+      "arxiv_id": "2603.02890",
+      "url": "https://arxiv.org/abs/2603.02890",
+      "notes": "Diffusion-generated families on the m-point cycle graph (cyclic group): explicit transition kernel, exact trigonometric moments, convergence to uniformity, discrete von Mises / wrapped Cauchy stationary laws."
+    },
+    {
+      "label": "A9",
+      "role": "continuous Lie-group instance (SE(3) frames)",
+      "title": "SE(3) diffusion model with application to protein backbone generation",
+      "authors": ["Jason Yim", "Brian L. Trippe", "Valentin De Bortoli", "Emile Mathieu", "Arnaud Doucet", "Regina Barzilay", "Tommi Jaakkola"],
+      "venue": "ICML 2023 (FrameDiff)",
+      "year": 2023,
+      "arxiv_id": "2302.02277",
+      "arxiv_version": "v3",
+      "url": "https://arxiv.org/abs/2302.02277",
+      "notes": "Invariant diffusion over multiple frames on SE(3); SE(3)-equivariant score over rigid-body frames."
+    },
+    {
+      "label": "A10",
+      "role": "continuous group instance (SO(3), unified SGM and DDPM)",
+      "title": "Unified framework for diffusion generative models in SO(3): applications in computer vision and astrophysics",
+      "authors": ["Yesukhei Jagvaral", "Francois Lanusse", "Rachel Mandelbaum"],
+      "venue": "AAAI 2024",
+      "year": 2023,
+      "arxiv_id": "2312.11707",
+      "url": "https://arxiv.org/abs/2312.11707",
+      "notes": "Extends both score-based and DDPM formulations to the Lie group SO(3); uses the tractable heat kernel on SO(3)."
+    },
+    {
+      "label": "A11",
+      "role": "continuous group instance (SO(3) DDPM, rotational alignment)",
+      "title": "Denoising Diffusion Probabilistic Models on SO(3) for Rotational Alignment",
+      "authors": ["Adam Leach", "Sebastian M. Schmon", "Matteo T. Degiacomi", "Chris G. Willcocks"],
+      "venue": "ICLR 2022 Workshop on Geometrical and Topological Representation Learning",
+      "year": 2022,
+      "url": "https://iclr.cc/virtual/2022/8698",
+      "notes": "DDPM on the rotation group; arXiv ID not confirmed this session."
+    },
+    {
+      "label": "A12",
+      "role": "Riemannian/general-manifold diffusion (SO(3) is a special case)",
+      "title": "Riemannian Score-Based Generative Modelling",
+      "authors": ["Valentin De Bortoli", "Emile Mathieu", "Michael Hutchinson", "James Thornton", "Yee Whye Teh", "Arnaud Doucet"],
+      "venue": "NeurIPS 2022",
+      "year": 2022,
+      "arxiv_id": "2202.02763",
+      "arxiv_version": "v3",
+      "url": "https://arxiv.org/abs/2202.02763",
+      "notes": "Extends score-based generative models from Euclidean space to Riemannian manifolds."
+    },
+    {
+      "label": "A13",
+      "role": "general Lie-group score-based framework",
+      "title": "Diffusion Generative Modeling on Lie Group Representations",
+      "authors": ["Marco Bertolini", "Tuan Le", "Djork-Arne Clevert"],
+      "venue": "NeurIPS 2025 (Spotlight)",
+      "year": 2025,
+      "arxiv_id": "2502.02513",
+      "arxiv_version": "v2",
+      "url": "https://arxiv.org/abs/2502.02513",
+      "notes": "Score-based processes in the representation space of any (non-Abelian) Lie group; states that standard score matching is recovered as the special case of the translation group. Applications: SO(3) conformers, SE(3) docking."
+    },
+    {
+      "label": "A14",
+      "role": "permutation symmetry via quotient manifold (contrast: not a group-valued state space)",
+      "title": "Permutation-Symmetrized Diffusion for Unconditional Molecular Generation",
+      "authors": ["Gyeonghoon Ko", "Juho Lee"],
+      "year": 2026,
+      "arxiv_id": "2603.23255",
+      "url": "https://arxiv.org/abs/2603.23255",
+      "notes": "Diffusion on the quotient manifold R^{d x N}/S_N; heat kernel as a sum of Euclidean heat kernels over permutations."
+    },
+    {
+      "label": "A15",
+      "role": "equivariance (contrast: group acts on a Euclidean state space)",
+      "title": "SymDiff: Equivariant Diffusion via Stochastic Symmetrisation",
+      "authors": ["Leo Zhang", "Kianoosh Ashouritaklimi", "Yee Whye Teh", "Rob Cornish"],
+      "venue": "ICLR 2025",
+      "year": 2024,
+      "arxiv_id": "2410.06262",
+      "arxiv_version": "v2",
+      "url": "https://arxiv.org/abs/2410.06262"
+    },
+    {
+      "label": "A16",
+      "role": "structure-preserving diffusion (contrast: group symmetries of the data distribution)",
+      "title": "Structure Preserving Diffusion Models",
+      "authors": ["Haoye Lu", "Spencer Szabados", "Yaoliang Yu"],
+      "year": 2024,
+      "arxiv_id": "2402.19369",
+      "arxiv_version": "v2",
+      "url": "https://arxiv.org/abs/2402.19369"
+    }
+  ]
+}

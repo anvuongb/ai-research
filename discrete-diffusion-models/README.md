@@ -114,3 +114,15 @@ This is handled by the `md-to-html` skill. The Markdown files are canonical;
   deploys it. **Live site:** <https://me.anvuong.dev/ai-research/> (the account's custom
   domain; `anvuongb.github.io/ai-research/` redirects there). `html/` is gitignored and
   rebuilt in CI.
+- **2026-09-27** — Added a *group diffusion* subsection to paper 2 in
+  `notes/paper-walkthrough.md`: the translation-invariant family (convolution forward, group
+  Fourier diagonalization, group-element noise), the result that Hoogeboom's uniform kernel
+  is its degenerate maximally-mixing member (with the spectral derivation), an
+  instances-by-group table, `S_n` and Lie-group case studies, the non-abelian difficulty, and
+  the equivariance contrast. Backed by a verified literature pass (SymmetricDiffusers ICLR
+  2025; Soft-Rank ICML 2026; Blackout Diffusion ICML 2023; finite-group Fourier/convolution
+  semigroups 2026; cycle-graph Markov processes; FrameDiff/SO(3)/Riemannian/Lie-group
+  representations; plus equivariance contrasts). `html/` regenerated.
+- **2026-09-27** — Added references A3–A16 (group diffusion) to
+  `sources/foundational-papers.md` and their verified records to
+  `sources/raw/group-diffusion-refs.json`. `html/` regenerated.

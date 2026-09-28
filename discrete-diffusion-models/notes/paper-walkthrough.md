@@ -508,3 +508,156 @@ relabelling it) is the ratio/score objective, which bypasses the ELBO entirely. 
 neat $\odot$ "product of two noisy estimates" form is specific to the **uniform** kernel;
 absorbing/mask corruption has a different posterior (deterministic on unmasked positions),
 which is exactly why masked diffusion collapses to a plain cross-entropy.
+
+---
+
+### Cross-cutting: group diffusion (the translation-invariant family)
+
+The taxonomy above listed "group $G$" as a single row. This section expands it, because it is
+the one place where discrete diffusion keeps a genuine **additive-noise** picture — and
+because paper 2's own kernel turns out to be the *degenerate* member of the family.
+
+"Group diffusion" is a descriptive name rather than a single canonical paper: the state space
+is a (finite or compact Lie) group $G$, and corruption is **translation by a random group
+element** instead of replacement. The closest formal treatments found in this pass are a
+finite-group Fourier construction [A7] and the exact discrete-state analysis of [A5]; the
+applied instances are [A3]–[A4] (permutations), [A8] (cycles) and [A9]–[A13] (Lie groups).
+
+#### The mechanism
+
+Write the group operation additively for abelian $G$ (composition for non-abelian). The
+forward step is
+
+$$x_t = x_{t-1} + g_t, \qquad g_t \sim \kappa_t \;\text{a distribution on } G.$$
+
+Because translations compose, the cumulative corruption is the group convolution
+
+$$\gamma_t = \kappa_1 \ast \kappa_2 \ast \cdots \ast \kappa_t,
+  \qquad q(x_t \mid x_0) = \gamma_t(x_t - x_0),$$
+
+the exact analogue of $q(x_t\mid x_0)=\mathcal{N}(\sqrt{\rho_t}x_0,\,(1-\rho_t)I)$. The reverse
+posterior is a ratio of convolutions,
+
+$$q(x_{t-1}\mid x_t,x_0)=
+  \frac{\kappa_t(x_t-x_{t-1})\,\gamma_{t-1}(x_{t-1}-x_0)}{\gamma_t(x_t-x_0)},$$
+
+and the stationary law is the Haar (uniform) measure. The payoff is the **group Fourier
+transform**: convolution becomes pointwise multiplication in the dual group, so for every
+character $\chi$ (abelian case)
+
+$$\mathcal{F}(\gamma_t)(\chi)=\prod_{s\le t}\mathcal{F}(\kappa_s)(\chi).$$
+
+The whole forward process — marginals, entropy terms, schedule — is therefore a family of
+eigenvalues $\mathcal{F}(\kappa_t)(\chi)$ rather than a $K\times K$ matrix. This is the discrete
+form of "the Gaussian is diagonal in the Fourier basis".
+
+Because the corruption is invertible and additive, the group element $g$ is *observable* from
+$(x_0,x_t)$ and can be predicted. Group diffusion is exactly the family in which the
+$\varepsilon$-style parameterization returns (taxonomy row 3).
+
+#### Paper 2 is the degenerate case: uniform replacement is a group diffusion
+
+Hoogeboom's kernel (paper 2, Eq. 11), rewritten for a general finite group $G$ of order $K$
+with identity $e$, *is* a translation kernel:
+
+$$Q_t = (1-\beta_t)\,\delta_e + \beta_t\,\mathrm{Unif}(G)
+  = \Big(1-\beta_t+\tfrac{\beta_t}{K}\Big)\delta_e + \sum_{g\neq e}\tfrac{\beta_t}{K}\,\delta_g .$$
+
+The "noise" is a group element: $g_t=e$ with probability $1-\beta_t+\beta_t/K$, and uniform on
+$G\setminus\{e\}$ otherwise. Multinomial diffusion is thus a group diffusion whose noise
+distribution is the **most spread-out one possible**.
+
+It pays to carry this through the Fourier picture once. For the cyclic group $\mathbb{Z}/K$ the
+characters are $\chi_k(n)=e^{2\pi i kn/K}$, and the per-step symbol is
+
+$$\mathcal{F}(\kappa_t)(\chi_k)=
+  \begin{cases} 1 & k=0 \quad(\text{trivial / stationary}),\\
+                 1-\beta_t & k\neq 0,\end{cases}$$
+
+so the cumulative kernel has eigenvalues $1$ and $\alpha_{1:t}=\prod_{s\le t}(1-\beta_s)$
+(Hoogeboom's $\bar\alpha_t$) — this is his closed-form marginal (Eq. 12) seen in the Fourier
+basis. Note what the symbol does *not* depend on: the frequency $k$. Every non-constant mode
+decays at the same rate, which is precisely what "replacement by uniform" means in spectral
+language. Contrast D3PM's discretized-Gaussian kernel (paper 3), whose symbol is Gaussian in
+$k$: low-frequency (smooth) modes survive longer than high-frequency ones, which is a genuine
+notion of locality and scale. **That single difference is the entire reason to prefer the
+structured kernel.** Paper 2 already lives inside the group-diffusion family; it just works
+with the member that discards the geometry it secretly has.
+
+#### The family, by group
+
+| Group $G$ | Typical data | Forward $\kappa_t$ | Representative work |
+| --- | --- | --- | --- |
+| $\mathbb{Z}/K$ (cyclic) | circular / periodic values | local walk on the cycle | [A8] (discrete circle); theory [A7] |
+| $(\mathbb{Z}/2)^n$ (hypercube) | bits | bit flips (XOR) | Sohl-Dickstein 2015 (paper 1); theory [A6] |
+| $\mathbb{Z}$ (lattice) | ordered categories | discretized Gaussian | D3PM (paper 3) |
+| $S_n$ (symmetric group) | permutations / rankings | riffle shuffle, random-transposition walk | [A3]; follow-up [A4] |
+| finite abelian $G$ (general) | arbitrary finite labels | convolution semigroup | [A7] |
+| $SO(3)$, $SE(3)$, Lie groups (continuous) | rotations, poses, frames | heat / Brownian motion on the group | [A11], [A9], [A10], [A12], [A13] |
+
+#### Case study: $S_n$ (permutations)
+
+Learning a distribution over $S_n$ is the hardest common instance: $|S_n|=n!$ and the group is
+non-abelian. [A3] takes the direct route: the forward process is a **riffle shuffle**, a random
+walk on the finite group $S_n$, and the diffusion length is chosen from the
+random-walk-on-finite-groups mixing theory for that walk; the reverse is a generalized
+Plackett–Luce distribution, provably more expressive than plain PL. The forward is therefore
+group-structured (a convolution), while the reverse is a *learned, ordered* distribution —
+exactly the same "group-structured forward, general reverse" pattern as paper 2. [A4] keeps the
+group but changes the corruption: it lifts the permutation to a continuous soft-rank
+representation and denoises there, reporting better behaviour on long sequences. A related but
+distinct idea is to quotient the ambient space by the group action rather than to put the
+group in the state space [A14].
+
+#### Case study: continuous Lie groups
+
+Replace the finite group by a compact Lie group and the convolution walk by Brownian motion:
+the heat kernel on the group is the noise distribution, and the "noise" is again a group
+element (a small rotation, a small rigid motion). [A11] runs a DDPM on $SO(3)$ for rotational
+alignment; [A10] gives a unified $SO(3)$ SGM/DDPM framework exploiting the tractable heat
+kernel there; [A9] builds an $SE(3)$-invariant diffusion over rigid-body frames (FrameDiff)
+with an $SE(3)$-equivariant score; [A12] develops the general Riemannian-manifold theory of
+which these are special cases; and [A13] formulates score-based diffusion in the
+*representation space* of an arbitrary (non-abelian) Lie group, noting explicitly that ordinary
+Euclidean score matching is recovered as the special case of the translation group. This is the
+continuous counterpart of the finite-group picture, and it is where the "predict the group
+element" parameterization is standard practice.
+
+#### Why non-abelian groups are hard
+
+For abelian $G$ the dual group is again a group of scalars, so every irreducible representation
+is one-dimensional and the forward kernel has scalar eigenvalues — hence [A7]'s clean
+Fourier/convolution-semigroup treatment on $\mathbb{Z}_N$. For non-abelian $G$ (notably $S_n$ and
+$SO(3)$) the irreducible representations are matrix-valued, so $\mathcal{F}(\kappa_t)$ is a matrix
+and the spectrum is not a list of numbers; [A7] names extension to non-abelian finite groups as
+future work. This is why the $S_n$ literature leans on random-walk mixing theory and structured
+reverse parameterizations [A3, A4] rather than on a spectral closed form.
+
+#### Do not confuse this with equivariance
+
+Group diffusion puts the group in the **state space and the corruption**. A different, more
+common use of groups keeps the state space Euclidean and makes the *network* commute with a
+group action — equivariant diffusion [A15], structure-preserving diffusion [A16], and the
+$E(3)$-equivariant networks inside molecular diffusion models. Both are called "group
+diffusion" in loose speech; only the first is what the taxonomy row means and what turns the
+noise variable into a group element.
+
+#### Cross-links
+
+- Paper 1's binomial diffusion is the $(\mathbb{Z}/2)^n$ instance (forward = XOR by an i.i.d.
+  Bernoulli vector); see the binomial deep dive above.
+- Paper 2's uniform kernel is the degenerate, non-local member; paper 3's discretized-Gaussian
+  kernel is the local member on $\mathbb{Z}$.
+- The escapes to a *continuous* state space — Analog Bits / Bit Diffusion [A1] and Dirichlet
+  Diffusion [A2] — are what one does when the discrete state space has no useful group
+  structure to exploit.
+
+**One-line summary.** Group diffusion = discrete diffusion whose corruption is a random group
+translation $x_t=x_{t-1}+g_t$; the forward chain is a convolution diagonalized by the group
+Fourier transform, the noise variable is an observable group element, uniform replacement
+(paper 2) is its maximally-mixing degenerate case, and the continuous Lie-group versions
+($SO(3)$, $SE(3)$) are where this parameterization is used in practice.
+
+**Sources.** Verified records (arXiv IDs, DOIs, S2 IDs, venues, dates) are stored in
+`sources/raw/group-diffusion-refs.json`; the A-labels above match that file.
+

@@ -196,6 +196,134 @@ spaces admit a noise formulation".
 
 ---
 
+# Additional references (group diffusion)
+
+References gathered **2026-09-27** for the walkthrough subsection "group diffusion". These
+cover the *translation-invariant* family: state spaces that are groups, forward corruption
+that is a random group translation, and the Fourier/convolution structure that follows. The
+first group is the discrete instances and the general theory; the second is the continuous
+(Lie-group) instances; the last two use groups for *equivariance* rather than as the state
+space, and are included as contrasts. Records: `raw/group-diffusion-refs.json`.
+
+## A3. SymmetricDiffusers: Learning Discrete Diffusion on Finite Symmetric Groups
+- **Authors:** Yongxing Zhang, Donglin Yang, Renjie Liao
+- **Venue / year:** ICLR 2025 (Oral); arXiv 2024
+- **arXiv:** [2410.02942](https://arxiv.org/abs/2410.02942) (v2, cs.LG)
+- **DOI:** [10.48550/arXiv.2410.02942](https://doi.org/10.48550/arXiv.2410.02942)
+- **S2:** `a541288ed3336f561350407b2cb4b2f248373658` · citations **7**
+- **Why it matters:** Discrete diffusion directly on the finite symmetric group `S_n`. The
+  forward process is a **riffle shuffle** — a random walk on the finite group — and the
+  diffusion length is chosen from random-walk-on-finite-groups mixing theory; the reverse is a
+  generalized Plackett–Luce distribution. Tasks: sorting 4-digit MNIST, jigsaw puzzles, TSP.
+- **Code:** https://github.com/DSL-Lab/SymmetricDiffusers
+
+## A4. Learning Permutation Distributions via Reflected Diffusion on Ranks (Soft-Rank Diffusion)
+- **Authors:** Sizhuang He, Yangtian Zhang, Shiyang Zhang, David van Dijk
+- **Venue / year:** ICML 2026
+- **arXiv:** [2603.17353](https://arxiv.org/abs/2603.17353) (v2, cs.LG)
+- **Why it matters:** Follow-up to A3. Keeps the permutation state space but replaces
+  shuffle-based corruption with a *soft-rank* continuous lift and uses contextualized
+  generalized Plackett–Luce denoisers; better on long sequences.
+
+## A5. Blackout Diffusion: Generative Diffusion Models in Discrete-State Spaces
+- **Authors:** Javier E. Santos, Zachary R. Fox, Nicholas Lubbers, Yen Ting Lin
+- **Venue / year:** ICML 2023 (PMLR v202, pp. 9034–9059)
+- **arXiv:** [2305.11089](https://arxiv.org/abs/2305.11089) (cs.LG)
+- **DOI:** [10.48550/arXiv.2305.11089](https://doi.org/10.48550/arXiv.2305.11089)
+- **S2:** `fb03154bbf1348e796f9a82b2372a7d5e7e4b45a` · citations **30**
+- **Why it matters:** Exact (non-variational) reverse-time analysis for *arbitrary*
+  discrete-state Markov forward processes — the general framework in which group diffusion is
+  the translation-invariant special case.
+- **Note:** PMLR lists the paper as "Generative Diffusion Models in Discrete-State Spaces"; the
+  arXiv title carries the "Blackout Diffusion" prefix. Same paper.
+
+## A6. Convergence Analysis of Discrete Diffusion Model: Exact Implementation through Uniformization
+- **Authors:** Hongrui Chen, Lexing Ying
+- **Venue / year:** arXiv 2024
+- **arXiv:** [2402.08095](https://arxiv.org/abs/2402.08095) (v2, stat.ML)
+- **Why it matters:** CTMC formulation with a uniformization algorithm; Total-Variation and
+  KL guarantees for sampling any distribution on a **hypercube** `(Z/2)^d`.
+
+## A7. Harmonic flows and Markov dynamics on finite groups via pseudo-differential operators
+- **Authors:** Anselmo Torresblanca-Badillo, Ronald Barrios-Garizao, Ronny Quiñonez-Martínez
+- **Venue / year:** Journal of Pseudo-Differential Operators and Applications, **17**(1), Article 18 (2026), open access
+- **DOI:** [10.1007/s11868-025-00759-7](https://doi.org/10.1007/s11868-025-00759-7)
+- **Why it matters:** The closest thing found to the *mathematics of group diffusion*: builds
+  diffusion on the finite abelian group `Z_N` via discrete Fourier analysis, convolution
+  semigroups, negative definite functions and pseudo-differential operators; the generators
+  are proved Feller, `m`-dissipative and self-adjoint. Explicitly flags extension to
+  **non-abelian** finite groups as future work (spectral diagonalization becomes harder).
+
+## A8. Markov processes on a circular lattice
+- **Authors:** Sourav Majumdar
+- **Venue / year:** arXiv 2026
+- **arXiv:** [2603.02890](https://arxiv.org/abs/2603.02890) (math.ST)
+- **Why it matters:** The cyclic-group instance — diffusion-generated families on the `m`-point
+  discrete circle (cycle graph), with an explicit transition kernel, exact trigonometric
+  moments, convergence to uniformity, and discrete von Mises / wrapped Cauchy stationary laws.
+
+## A9. SE(3) diffusion model with application to protein backbone generation (FrameDiff)
+- **Authors:** Jason Yim, Brian L. Trippe, Valentin De Bortoli, Emile Mathieu, Arnaud Doucet, Regina Barzilay, Tommi Jaakkola
+- **Venue / year:** ICML 2023
+- **arXiv:** [2302.02277](https://arxiv.org/abs/2302.02277) (v3, cs.LG)
+- **Why it matters:** Invariant diffusion over rigid-body *frames* on `SE(3)`, with an
+  `SE(3)`-equivariant score — the continuous-group analogue of "noise is a group element".
+
+## A10. Unified framework for diffusion generative models in SO(3)
+- **Authors:** Yesukhei Jagvaral, Francois Lanusse, Rachel Mandelbaum
+- **Venue / year:** AAAI 2024
+- **arXiv:** [2312.11707](https://arxiv.org/abs/2312.11707) (cs.LG)
+- **Why it matters:** Extends both score-based and DDPM formulations to the Lie group `SO(3)`,
+  exploiting its tractable heat kernel.
+
+## A11. Denoising Diffusion Probabilistic Models on SO(3) for Rotational Alignment
+- **Authors:** Adam Leach, Sebastian M. Schmon, Matteo T. Degiacomi, Chris G. Willcocks
+- **Venue / year:** ICLR 2022 Workshop on Geometrical and Topological Representation Learning
+- **URL:** <https://iclr.cc/virtual/2022/8698> · ML Anthology: `iclrw/2022`
+- **Why it matters:** An early DDPM defined on the rotation group `SO(3)`.
+- **Note:** arXiv ID not confirmed this session.
+
+## A12. Riemannian Score-Based Generative Modelling
+- **Authors:** Valentin De Bortoli, Emile Mathieu, Michael Hutchinson, James Thornton, Yee Whye Teh, Arnaud Doucet
+- **Venue / year:** NeurIPS 2022
+- **arXiv:** [2202.02763](https://arxiv.org/abs/2202.02763) (v3, cs.LG)
+- **Why it matters:** The general Riemannian-manifold theory of which the `SO(3)`/`SE(3)` group
+  models are special cases.
+
+## A13. Diffusion Generative Modeling on Lie Group Representations
+- **Authors:** Marco Bertolini, Tuan Le, Djork-Arné Clevert
+- **Venue / year:** NeurIPS 2025 (Spotlight)
+- **arXiv:** [2502.02513](https://arxiv.org/abs/2502.02513) (v2, cs.LG)
+- **Why it matters:** Score-based diffusion in the *representation space* of any (non-abelian)
+  Lie group; states that ordinary Euclidean score matching is recovered as the special case of
+  the **translation group**. Applications: `SO(3)` conformers, `SE(3)` docking.
+
+## A14. Permutation-Symmetrized Diffusion for Unconditional Molecular Generation
+- **Authors:** Gyeonghoon Ko, Juho Lee
+- **Venue / year:** arXiv 2026 (ICLR 2026)
+- **arXiv:** [2603.23255](https://arxiv.org/abs/2603.23255) (cs.LG)
+- **Why it matters (as a contrast):** Diffuses on the *quotient manifold* `R^{d x N}/S_N`
+  instead of on the group itself — the group action is removed rather than used as the state
+  space.
+
+## A15. SymDiff: Equivariant Diffusion via Stochastic Symmetrisation
+- **Authors:** Leo Zhang, Kianoosh Ashouritaklimi, Yee Whye Teh, Rob Cornish
+- **Venue / year:** ICLR 2025
+- **arXiv:** [2410.06262](https://arxiv.org/abs/2410.06262) (v2, cs.LG)
+- **Why it matters (as a contrast):** Uses groups for *equivariance* of the model, with a
+  Euclidean state space — the common meaning of "group" in generative modeling, distinct from
+  group-valued state spaces.
+
+## A16. Structure Preserving Diffusion Models
+- **Authors:** Haoye Lu, Spencer Szabados, Yaoliang Yu
+- **Venue / year:** arXiv 2024
+- **arXiv:** [2402.19369](https://arxiv.org/abs/2402.19369) (v2, cs.LG)
+- **Why it matters (as a contrast):** Diffusion processes that preserve group-invariant
+  properties of the data distribution; again a network/process symmetry, not a group state
+  space.
+
+---
+
 ## Provenance
 
 | Source | Endpoint | Used for |
@@ -204,8 +332,13 @@ spaces admit a noise formulation".
 | Semantic Scholar Graph API | `api.semanticscholar.org/graph/v1/paper/arXiv:<id>` (header `x-api-key`) | S2 paper IDs, citation/influential snapshots, venues, DOIs, TLDRs |
 | Semantic Scholar Graph API (bulk search) | `.../paper/search/bulk?query=...` (header `x-api-key`) | Additional refs A1–A2 (Analog Bits 2208.04202, Dirichlet Diffusion 2305.10699) |
 | OpenAlex | `api.openalex.org/works` | DOI/venue cross-checks (VQ-Diffusion) |
+| arXiv API (batch `id_list`) | `export.arxiv.org/api/query?id_list=...` | Group-diffusion refs A3–A6, A8–A16 titles/authors/dates/versions |
+| Semantic Scholar Graph API (bulk search) | `.../paper/search/bulk?query=...` | S2 IDs and citation snapshots for A3 (SymmetricDiffusers) and A5 (Blackout Diffusion) |
+| Web search + Springer article page | `link.springer.com/article/10.1007/s11868-025-00759-7` | A7 bibliographic details (authors, journal, volume, open access) and A11 venue |
 
 - Raw Semantic Scholar responses: `raw/s2-<arxiv-id>.json` (all 10 papers).
+- Group-diffusion records (A3–A16): `raw/group-diffusion-refs.json` (arXiv API + S2 bulk
+  search + web/Springer, retrieved 2026-09-27).
 - Semantic Scholar and OpenAlex were intermittently rate-limited during retrieval
   (HTTP 429); retries with the API key completed the set. All identifiers and counts
   above were returned directly by the listed endpoints.
