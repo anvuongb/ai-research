@@ -29,8 +29,9 @@ against the skill's own path if you are not in the repo root.
 
 What it does:
 
-- Reads every `*.md` under the topic, excluding `html/` and hidden directories
-  (`.git`, `.agents`, …).
+- Reads every `*.md` under the topic, excluding `html/`, hidden directories
+  (`.git`, `.agents`, …), and any path matched by an optional `.htmlignore` at the
+  topic root (see *Excluding files* below).
 - Writes `html/<same relative path>.html` and `html/index.html`.
 - Rewrites relative `.md` links to `.html` (fragments preserved); leaves external
   URLs (`https:`, `doi.org`, arXiv, GitHub) untouched.
@@ -61,7 +62,9 @@ file://<abs-path-to-topic>/html/index.html
 
 ## Steps
 
-1. Identify the topic directory (the active topic). Do not render the whole repo.
+1. Identify the topic directory (the active topic). Do not render the whole repo —
+   the one exception is the GitHub Pages build, which renders the repo root so all
+   topics appear together (see the root `.htmlignore` for files to keep out).
 2. Run `scripts/convert.py <topic-dir>`.
 3. Verify the internal links resolve:
 
@@ -94,3 +97,8 @@ file://<abs-path-to-topic>/html/index.html
   A stale `html/` tree is a documentation defect (see `AGENTS.md` §8).
 - **Never hand-edit files under `html/`** — they are overwritten on the next run.
 - `html/` is generated output. Deleting it is safe; re-run the script to rebuild.
+- **Excluding files:** create a `.htmlignore` at the build root with one `fnmatch`
+  pattern per line (`#` starts a comment). Each pattern is matched against a file's
+  path relative to the root *and* against its first path component, so a bare
+  directory name excludes that whole subtree. Example: a multi-topic root can list
+  `AGENTS.md` in `.htmlignore` to keep the agent contract off the generated site.

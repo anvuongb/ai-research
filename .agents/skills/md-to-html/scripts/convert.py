@@ -5,7 +5,8 @@ Usage:
     python3 convert.py [TOPIC_DIR]
 
 Defaults to the current working directory. Reads every ``*.md`` under the topic
-(excluding the output directory ``html/`` and hidden directories) and writes
+(excluding the output directory ``html/``, hidden directories, and any paths
+matched by an optional ``.htmlignore`` file at the topic root) and writes
 ``<topic>/html/<same relative path>.html`` plus ``<topic>/html/index.html``.
 Relative links between Markdown files are rewritten to point at the generated
 HTML. All CSS is embedded, so the output works offline.
@@ -18,6 +19,7 @@ Dependencies: Python 3.8+ and the ``markdown`` package (``pip install markdown``
 
 from __future__ import annotations
 
+import fnmatch
 import html as html_mod
 import os
 import re
@@ -128,6 +130,33 @@ Rendered from <code>{source}</code> &middot; preview only, the Markdown file is 
 ROOT: Path = Path.cwd().resolve()
 OUT: Path = ROOT / "html"
 TOPIC: str = ROOT.name
+IGNORE: list[str] = []
+
+
+def load_ignore() -> list[str]:
+    """Read optional ``.htmlignore`` patterns (relative to ROOT) from the root.
+
+    Blank lines and lines starting with ``#`` are ignored. Each remaining line is
+    matched with :func:`fnmatch.fnmatch` against a Markdown file's path relative
+    to ROOT (POSIX separators), and additionally against its first path component,
+    so a bare directory name excludes that whole subtree.
+    """
+    path = ROOT / ".htmlignore"
+    if not path.is_file():
+        return []
+    patterns = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if line and not line.startswith("#"):
+            patterns.append(line)
+    return patterns
+
+
+def is_ignored(rel: Path) -> bool:
+    for pattern in IGNORE:
+        if fnmatch.fnmatch(rel.as_posix(), pattern) or fnmatch.fnmatch(rel.parts[0], pattern):
+            return True
+    return False
 
 
 def collect_markdown() -> list[Path]:
@@ -137,6 +166,8 @@ def collect_markdown() -> list[Path]:
         if OUT in p.parents or OUT == p.parent:
             continue
         if any(part.startswith(".") for part in rel.parts):
+            continue
+        if is_ignored(rel):
             continue
         files.append(p)
     return files
@@ -303,7 +334,7 @@ def build_index(converted: dict[Path, Path]) -> str:
 
 
 def main() -> None:
-    global ROOT, OUT, TOPIC
+    global ROOT, OUT, TOPIC, IGNORE
     if len(sys.argv) > 1:
         ROOT = Path(sys.argv[1]).expanduser().resolve()
         OUT = ROOT / "html"
@@ -311,6 +342,7 @@ def main() -> None:
     if not ROOT.is_dir():
         sys.exit(f"error: not a directory: {ROOT}")
 
+    IGNORE = load_ignore()
     OUT.mkdir(parents=True, exist_ok=True)
     md_files = collect_markdown()
     if not md_files:

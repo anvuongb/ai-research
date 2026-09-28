@@ -1,0 +1,6 @@
+# Paths excluded from the generated HTML site (fnmatch patterns, relative to the
+# build root). Each pattern is matched against a file's relative path and against
+# its first path component. One pattern per line; '#' starts a comment.
+
+# The repo operating contract is for agents, not the public docs site.
+AGENTS.md
