@@ -1,0 +1,9 @@
+# Generated HTML previews (rebuilt by CI and by the md-to-html skill)
+html/
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
