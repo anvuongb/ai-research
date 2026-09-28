@@ -253,6 +253,11 @@ space, and are included as contrasts. Records: `raw/group-diffusion-refs.json`.
   semigroups, negative definite functions and pseudo-differential operators; the generators
   are proved Feller, `m`-dissipative and self-adjoint. Explicitly flags extension to
   **non-abelian** finite groups as future work (spectral diagonalization becomes harder).
+- **Walkthrough:** studied as **paper 3** in `notes/paper-walkthrough.md` (placed before D3PM
+  deliberately, as the operator-theoretic foundation for translation-invariant kernels). That
+  entry contains a from-scratch primer on the operator theory, the construction step by step,
+  and a correction to the paper's worked example (its dispersion function psi(n)=n^2 on Z_5 is
+  not even, hence not admissible; the correct quadratic dispersion is 2(1-cos(2*pi*m/N))).
 
 ## A8. Markov processes on a circular lattice
 - **Authors:** Sourav Majumdar

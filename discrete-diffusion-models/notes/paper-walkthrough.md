@@ -1,25 +1,29 @@
-# Paper Walkthrough — Chronological
+# Paper Walkthrough — Study Order
 
-Durable notes from a paper-by-paper read of the topic, oldest first. Each entry
+Durable notes from a paper-by-paper read of the topic. Each entry
 records **3 key points** and the **main innovation**. This is an evolving document;
 entries are refined as follow-up questions are answered.
 
-**Progress:** 2 / 10.
+**Progress:** 3 / 11.
 
 ## Reading order
 
-Ordered by first arXiv posting (venue in parentheses):
+Numbered in **study order** (venue in parentheses). Entries 1, 2 and 4–11 follow first arXiv
+posting; entry 3 is a **foundations interlude** inserted deliberately — it is a 2026 journal
+article, and its operator-theoretic view of translation-invariant (group-convolution) kernels
+is the right preparation for D3PM's structured kernels. See the note under entry 3.
 
 1. 2015-03-12 — Sohl-Dickstein et al., *Deep Unsupervised Learning using Nonequilibrium Thermodynamics* (ICML 2015) — `1503.03585`
 2. 2021-02-10 — Hoogeboom et al., *Argmax Flows and Multinomial Diffusion* (NeurIPS 2021) — `2102.05379`
-3. 2021-07-07 — Austin et al., *Structured Denoising Diffusion Models in Discrete State-Spaces (D3PM)* (NeurIPS 2021) — `2107.03006`
-4. 2021-11-29 — Gu et al., *Vector Quantized Diffusion (VQ-Diffusion)* (CVPR 2022) — `2111.14822`
-5. 2022-02-08 — Chang et al., *MaskGIT* (CVPR 2022) — `2202.04200`
-6. 2022-11-01 — Meng et al., *Concrete Score Matching* (NeurIPS 2022) — `2211.00802`
-7. 2022-11-28 — Dieleman et al., *CDCD: Continuous diffusion for categorical data* (arXiv 2022) — `2211.15089`
-8. 2023-05-30 — Gulrajani & Hashimoto, *Plaid: Likelihood-Based Diffusion Language Models* (NeurIPS 2023) — `2305.18619`
-9. 2023-10-25 — Lou, Meng, Ermon, *Discrete Diffusion Modeling by Estimating the Ratios of the Data Distribution (SEDD)* (ICML 2024 Oral) — `2310.16834`
-10. 2024-06-11 — Sahoo et al., *Simple and Effective Masked Diffusion Language Models (MDLM)* (NeurIPS 2024) — `2406.07524`
+3. 2026 — Torresblanca-Badillo, Barrios-Garizao & Quiñonez-Martínez, *Harmonic flows and Markov dynamics on finite groups via pseudo-differential operators* (J. Pseudo-Differ. Oper. Appl. 17(1), Art. 18) — `10.1007/s11868-025-00759-7`
+4. 2021-07-07 — Austin et al., *Structured Denoising Diffusion Models in Discrete State-Spaces (D3PM)* (NeurIPS 2021) — `2107.03006`
+5. 2021-11-29 — Gu et al., *Vector Quantized Diffusion (VQ-Diffusion)* (CVPR 2022) — `2111.14822`
+6. 2022-02-08 — Chang et al., *MaskGIT* (CVPR 2022) — `2202.04200`
+7. 2022-11-01 — Meng et al., *Concrete Score Matching* (NeurIPS 2022) — `2211.00802`
+8. 2022-11-28 — Dieleman et al., *CDCD: Continuous diffusion for categorical data* (arXiv 2022) — `2211.15089`
+9. 2023-05-30 — Gulrajani & Hashimoto, *Plaid: Likelihood-Based Diffusion Language Models* (NeurIPS 2023) — `2305.18619`
+10. 2023-10-25 — Lou, Meng, Ermon, *Discrete Diffusion Modeling by Estimating the Ratios of the Data Distribution (SEDD)* (ICML 2024 Oral) — `2310.16834`
+11. 2024-06-11 — Sahoo et al., *Simple and Effective Masked Diffusion Language Models (MDLM)* (NeurIPS 2024) — `2406.07524`
 
 ---
 
@@ -436,7 +440,7 @@ inverts the forward process through **algebra**; $x_0$-prediction learns a **dis
 clean states** and applies the forward process through **Bayes' rule** — i.e. amortized
 posterior inference. For absorbing/mask corruption the posterior says "unmasked positions
 are known, masked positions must be guessed," so the bound reduces to weighted masked-LM
-cross-entropy (MDLM, paper 10).
+cross-entropy (MDLM, paper 11).
 
 **When a noise formulation returns.** $x_0$-prediction is forced only by the *combination*
 (replacement corruption) + (native categorical state space) + (variational-bound route).
@@ -444,7 +448,7 @@ Change any one: the **concrete-score** objective predicts probability *ratios* (
 analogue of the continuous score) instead of the clean token (Meng 2022, SEDD 2023);
 **lattice/ordinal** states admit integer-shift "noise" (D3PM's discretized-Gaussian kernel);
 and **embedding** the categorical in a continuous space restores standard $\varepsilon$/score
-prediction (CDCD, paper 7).
+prediction (CDCD, paper 8).
 
 ### Cross-cutting: which discrete state spaces admit a noise formulation
 
@@ -461,11 +465,11 @@ discrete state spaces carry such a structure?*
 $x_0$ by predicting the *concrete score* over one-token neighbours $y$,
 $s_\theta(x_t)_y=p_\theta(y)/p_\theta(x_t)$ — the discrete analogue of $\nabla\log p$ — with the
 reverse CTMC rate built directly from ratios. So $x_0$-prediction is one of *two* native
-parameterizations, not the only one (Meng 2022, paper 6; SEDD 2023, paper 9).
+parameterizations, not the only one (Meng 2022, paper 7; SEDD 2023, paper 10).
 
 **2. Lattice / ordinal states.** If $x\in\{0,\dots,K-1\}$ denotes a quantized ordinal value,
 the displacement $\delta=x_t-x_0\in\mathbb{Z}$ is meaningful and the shift itself is the noise
-target. This is D3PM's discretized-Gaussian kernel (paper 3); uniform and absorbing are
+target. This is D3PM's discretized-Gaussian kernel (paper 4); uniform and absorbing are
 degenerate limits.
 
 **3. Group-structured states.** For $x\in\mathbb{Z}/N\mathbb{Z}$ or permutations $S_n$, corruption
@@ -483,7 +487,7 @@ S2 `b64537bdf7a103aa01972ba06ea24a9c08f7cd74`).
 probability simplex and run a continuous score-SDE (→ *Dirichlet Diffusion Score Model*,
 Avdeyev et al., arXiv:2305.10699, ICML 2023, S2 `4319a5faceb0f94fc791e49dc0b94dd4d142f90e`,
 PMID 37292476), or diffuse in a learned logit embedding (→ score interpolation / **CDCD**,
-paper 7). Standard $\varepsilon$/score prediction then applies directly.
+paper 8). Standard $\varepsilon$/score prediction then applies directly.
 
 **6. Count / nonnegative-integer states.** If corruption is *additive* Poisson/binomial noise
 on a count, the increment is a genuine additive noise target. (Principle only; no canonical
@@ -492,10 +496,10 @@ reference pinned in this session.)
 | State space | Corruption | "Noise" variable | Example |
 | --- | --- | --- | --- |
 | Categorical $\{1..K\}$ | replacement → uniform/mask | none additive; use ratios | Meng 2022; SEDD |
-| Ordinal $\{0..K-1\}$ | discretized Gaussian | integer shift $\delta$ | D3PM (paper 3) |
+| Ordinal $\{0..K-1\}$ | discretized Gaussian | integer shift $\delta$ | D3PM (paper 4) |
 | Group $G$ ($\mathbb{Z}/N$, $S_n$) | group translation | group element $g$ | group diffusion |
 | Binary $\{-1,+1\}$ | sign flip | $\xi\in\{\pm1\}$ | Analog Bits (2208.04202) |
-| Simplex / logits | Gaussian | $\varepsilon$ / score | Dirichlet Diff. (2305.10699); CDCD (paper 7) |
+| Simplex / logits | Gaussian | $\varepsilon$ / score | Dirichlet Diff. (2305.10699); CDCD (paper 8) |
 | Counts $\mathbb{N}$ | Poisson/binomial add | count increment | count diffusion |
 
 **The precise nuance.** "$x_0$ is forced" is shorthand for *the variational-bound posterior is
@@ -520,7 +524,7 @@ because paper 2's own kernel turns out to be the *degenerate* member of the fami
 "Group diffusion" is a descriptive name rather than a single canonical paper: the state space
 is a (finite or compact Lie) group $G$, and corruption is **translation by a random group
 element** instead of replacement. The closest formal treatments found in this pass are a
-finite-group Fourier construction [A7] and the exact discrete-state analysis of [A5]; the
+finite-group Fourier construction [A7] (studied as **paper 3** below) and the exact discrete-state analysis of [A5]; the
 applied instances are the permutation-group model SymmetricDiffusers [A3] and its soft-rank
 follow-up [A4], the cycle-graph construction [A8], and the Lie-group models [A9]–[A13].
 
@@ -579,7 +583,7 @@ so the cumulative kernel has eigenvalues $1$ and $\alpha_{1:t}=\prod_{s\le t}(1-
 (Hoogeboom's $\bar\alpha_t$) — this is his closed-form marginal (Eq. 12) seen in the Fourier
 basis. Note what the symbol does *not* depend on: the frequency $k$. Every non-constant mode
 decays at the same rate, which is precisely what "replacement by uniform" means in spectral
-language. Contrast D3PM's discretized-Gaussian kernel (paper 3), whose symbol is Gaussian in
+language. Contrast D3PM's discretized-Gaussian kernel (paper 4), whose symbol is Gaussian in
 $k$: low-frequency (smooth) modes survive longer than high-frequency ones, which is a genuine
 notion of locality and scale. **That single difference is the entire reason to prefer the
 structured kernel.** Paper 2 already lives inside the group-diffusion family; it just works
@@ -591,7 +595,7 @@ with the member that discards the geometry it secretly has.
 | --- | --- | --- | --- |
 | $\mathbb{Z}/K$ (cyclic) | circular / periodic values | local walk on the cycle | [A8] (discrete circle); theory [A7] |
 | $(\mathbb{Z}/2)^n$ (hypercube) | bits | bit flips (XOR) | Sohl-Dickstein 2015 (paper 1); theory [A6] |
-| $\mathbb{Z}$ (lattice) | ordered categories | discretized Gaussian | D3PM (paper 3) |
+| $\mathbb{Z}$ (lattice) | ordered categories | discretized Gaussian | D3PM (paper 4) |
 | $S_n$ (symmetric group) | permutations / rankings | riffle shuffle, random-transposition walk | SymmetricDiffusers [A3]; soft-rank [A4] |
 | finite abelian $G$ (general) | arbitrary finite labels | convolution semigroup | [A7] |
 | $SO(3)$, $SE(3)$, Lie groups (continuous) | rotations, poses, frames | heat / Brownian motion on the group | [A11], [A9], [A10], [A12], [A13] |
@@ -627,10 +631,10 @@ element" parameterization is standard practice.
 #### Why non-abelian groups are hard
 
 For abelian $G$ the dual group is again a group of scalars, so every irreducible representation
-is one-dimensional and the forward kernel has scalar eigenvalues — hence [A7]'s clean
+is one-dimensional and the forward kernel has scalar eigenvalues — hence [A7]'s (paper 3's) clean
 Fourier/convolution-semigroup treatment on $\mathbb{Z}_N$. For non-abelian $G$ (notably $S_n$ and
 $SO(3)$) the irreducible representations are matrix-valued, so $\mathcal{F}(\kappa_t)$ is a matrix
-and the spectrum is not a list of numbers; [A7] names extension to non-abelian finite groups as
+and the spectrum is not a list of numbers; [A7] (paper 3) names extension to non-abelian finite groups as
 future work. This is why the $S_n$ literature leans on random-walk mixing theory and structured
 reverse parameterizations [A3, A4] rather than on a spectral closed form.
 
@@ -647,7 +651,7 @@ noise variable into a group element.
 
 - Paper 1's binomial diffusion is the $(\mathbb{Z}/2)^n$ instance (forward = XOR by an i.i.d.
   Bernoulli vector); see the binomial deep dive above.
-- Paper 2's uniform kernel is the degenerate, non-local member; paper 3's discretized-Gaussian
+- Paper 2's uniform kernel is the degenerate, non-local member; paper 4's discretized-Gaussian
   kernel is the local member on $\mathbb{Z}$.
 - The escapes to a *continuous* state space — Analog Bits / Bit Diffusion [A1] and Dirichlet
   Diffusion [A2] — are what one does when the discrete state space has no useful group
@@ -661,4 +665,356 @@ Fourier transform, the noise variable is an observable group element, uniform re
 
 **Sources.** Verified records (arXiv IDs, DOIs, S2 IDs, venues, dates) are stored in
 `sources/raw/group-diffusion-refs.json`; the A-labels above match that file.
+
+---
+
+## 3. Harmonic flows and Markov dynamics on finite groups via pseudo-differential operators
+*Torresblanca-Badillo, Barrios-Garizao & Quiñonez-Martínez — J. Pseudo-Differ. Oper. Appl. **17**(1), Art. 18, 2026 · DOI [`10.1007/s11868-025-00759-7`](https://doi.org/10.1007/s11868-025-00759-7) · open access · no arXiv preprint*
+
+> **Why this sits at 3.** It is the newest paper in this list (2026) yet is placed *before*
+> D3PM on purpose. It is the mathematics underneath the *group diffusion* family: it answers
+> *what makes a translation-invariant forward kernel a legitimate Markov kernel, and what is
+> its spectrum?* D3PM (paper 4) then reads as the engineering instantiation of one particular
+> choice of that spectrum. It is a pure analysis paper — **no learning, no reverse process, no
+> generative model, no experiments beyond an illustration.** Read it as foundations.
+
+### 3 key points
+
+1. **Diffusion on a finite group is a convolution semigroup, and the group Fourier transform
+   diagonalizes it.** The state space is $\mathbb{Z}_N$ (integers mod $N$: the $N$-cycle), and
+   "corruption" is *translation by a random group element*, so the forward kernel is a
+   convolution. Under $\mathcal{F}$, convolution becomes pointwise multiplication, so the whole
+   time evolution collapses from an $N\times N$ matrix to $N$ scalar decay rates.
+
+2. **One non-negative "dispersion function" $\psi$ on the dual group specifies the entire
+   process.** The transition kernel at time $t$ is
+   $$Z_t=\mathcal{F}^{-1}\!\left(e^{-t\psi}\right),$$
+   equivalently: the eigenvalues of the kernel are exactly $e^{-t\psi(m)}$. So $\psi$ *is* the
+   noise spectrum — the discrete analogue of "the Gaussian's Fourier transform is a Gaussian".
+
+3. **The generator is a Fourier multiplier — a pseudo-differential operator
+   $A_\psi=-\mathcal{F}^{-1}(\psi\,\mathcal{F})$ — and it is bounded, self-adjoint and
+   $m$-dissipative.** Together with the Feller-semigroup property of the operator family
+   $T_t z = Z_t\ast z$, this is what guarantees the associated diffusion equation is
+   well-posed, stable and probability-preserving. That is the analytic licence for using such
+   kernels as a forward process.
+
+### Main innovation
+
+The paper builds a **self-contained harmonic-analysis/operator-theory construction of
+discrete diffusion on a finite abelian group**, and in doing so isolates the exact
+condition that makes a translation-invariant kernel a valid Markov kernel:
+
+1. define probability measures as inverse Fourier transforms of $e^{-t\psi}$ (Thm 1);
+2. show they compose in time, $Z_t\ast Z_s=Z_{t+s}$, i.e. form a convolution semigroup (Prop 1);
+3. identify the **negative-definiteness** condition on $\psi$ that legitimizes step 1
+   (Thm 2 — see the caveat below), and
+4. prove the associated operator is a **Feller semigroup** (Thm 3) whose generator is
+   **$m$-dissipative and self-adjoint** (Thm 4).
+
+The framing is what is new: the same objects are classical in potential theory and in
+Lévy-process theory on locally compact abelian groups, but here they are assembled
+explicitly and concretely for the finite cyclic group, with the "dispersion function"
+$\psi$ exposed as the single design knob. The paper also names two extensions it does *not*
+do: **non-abelian finite groups** ("spectral diagonalization presents new challenges") and
+**ultrametric / $p$-adic groups**. It claims applications in signal processing on finite
+graphs, simulation of discrete stochastic systems, and numerical analysis — but runs no ML
+experiments and never constructs a generative model.
+
+### Why it matters for this topic
+
+- It is the rigorous version of the "group diffusion" story already sketched under paper 2:
+  a translation-invariant forward kernel is a **group convolution**, and its spectrum is
+  $e^{-t\psi}$. The earlier spectral remark — that Hoogeboom's uniform kernel has symbol
+  $1-\beta$ on *every* non-trivial character — is the special case $\psi\equiv\text{const}$ on
+  $m\neq 0$.
+- It tells us **when a structured kernel is admissible**: $\psi$ must be negative definite
+  (equivalently, even and inside the Lévy–Khinchin cone). "Pick a nice-looking $\psi$" is not
+  enough — see the correction below.
+- The generator $A_\psi$ is exactly the **continuous-time Markov chain rate matrix** of a
+  translation-invariant chain. That is the object papers 7 (concrete score / CTMC) and 10
+  (SEDD) learn a *discrete* analogue of. This paper is the forward half of that picture.
+- It is **forward-only**. There is no reverse process, no ELBO, no score, no learning. The
+  generative half is papers 4, 7 and 10.
+
+---
+
+### Primer: the operator-theory toolkit, from zero
+
+Nothing below assumes prior operator theory. Each notion gets the one-line intuition first,
+then the formal statement, then why we care.
+
+#### 1. The state space is a group, so "noise" means "translation"
+
+A group is a set with an operation you can undo (addition mod $N$ here). Writing
+$\mathbb{Z}_N=\{0,1,\dots,N-1\}$ with addition mod $N$, a *translation* by $g$ is the map
+$n\mapsto n+g$. The payoff of this structure is that translating, then translating again, is
+translating by the sum:
+$$(n+g_1)+g_2 = n+(g_1+g_2).$$
+So if corruption is "add a random $g_t$", the effect of many steps is "add the sum of the
+$g_t$" — which is why everything below factorizes. This is the group analogue of the
+Gaussian case, where corruption is "add a random vector" and many steps add up to one
+Gaussian.
+
+#### 2. Functions on $\mathbb{Z}_N$ are vectors; convolution is the group's "blur"
+
+A complex function $z:\mathbb{Z}_N\to\mathbb{C}$ is just a vector
+$z=(z(0),\dots,z(N-1))$, and the space of them is written $L^2(\mathbb{Z}_N)=\mathbb{C}^N$.
+The **convolution** of two functions is
+$$(z\ast w)(m)=\sum_{n=0}^{N-1} z(m-n)\,w(n).$$
+Convolution is the "smear $w$ according to $z$" operation. A probability distribution $\mu$
+acting on a function is exactly a convolution: $\mu\ast z$. Convolution is commutative and
+associative, and $z\ast\delta=z$ where $\delta=(1,0,\dots,0)$ is the point mass at $0$.
+
+#### 3. The Fourier transform diagonalizes convolution
+
+Define the (discrete) Fourier transform by
+$$\mathcal{F}(z)(m)=\sum_{n=0}^{N-1} z(n)\,e^{-2\pi i mn/N}, \qquad
+  \mathcal{F}^{-1}(z)(n)=\frac{1}{N}\sum_{m=0}^{N-1} z(m)\,e^{2\pi i mn/N}.$$
+The **convolution theorem** is the whole game:
+$$\mathcal{F}(z\ast w)=\mathcal{F}(z)\cdot\mathcal{F}(w) \quad\text{(pointwise)}.$$
+In matrix language: a kernel that acts by convolution is a **circulant matrix**, and the
+Fourier basis is exactly its eigenbasis. Equivalently, the characters
+$\chi_k(n)=e^{2\pi i kn/N}$ are the eigenvectors:
+$$(\mu\ast \chi_k)=\mathcal{F}(\mu)(k)\,\chi_k.$$
+So "convolution operator" and "diagonal in the Fourier basis" are the same statement, and the
+**Fourier transform of the kernel is its eigenvalue list.** Everything the paper does follows
+from this.
+
+#### 4. The dispersion function $\psi$ is the noise spectrum
+
+The paper fixes a *dispersion function* $\psi:\mathbb{Z}_N\to\mathbb{R}_+$ with
+
+- (i) $\psi(m)>0$ for $m\neq 0$, and
+- (ii) $\psi(m)=0$ if and only if $m=0$.
+
+Intuition: $\psi(m)$ is the **decay rate of frequency $m$**. Think of $m$ as a frequency
+index and $\psi(m)$ as how fast that frequency is damped. $\psi(0)=0$ says the constant mode
+(the total mass) never decays — that is mass conservation. Two familiar choices:
+
+- $\psi(m)=2(1-\cos(2\pi m/N))$ — small for low frequencies, large for high ones: a
+  **diffusion** that smooths (the cycle-graph Laplacian).
+- $\psi(m)=\text{const}$ for $m\neq 0$ — all frequencies damp at the same rate: **maximally
+  mixing**, no geometry.
+
+#### 5. The heat kernel $Z_t$: how the process spreads in time
+
+Given $\psi$, define
+$$Z_t(n)=\mathcal{F}^{-1}\!\left(e^{-t\psi}\right)(n)
+  =\frac{1}{N}\sum_{m=0}^{N-1} e^{-t\psi(m)}\,e^{2\pi i mn/N},\qquad t\ge 0 .$$
+Read it as: **start from a point mass and let each frequency decay at its own rate.**
+Because $\psi(m)\ge 0$, high-$\psi$ (rough) frequencies die first and $Z_t$ smooths out;
+$\psi(0)=0$ keeps the total at $1$. In the Fourier domain the evolution is the trivial
+multiplication $e^{-t\psi(m)}$; in the spatial domain it is the (generally complicated)
+inverse transform.
+
+#### 6. Semigroup = "time adds up"
+
+A family $(\mu_t)_{t>0}$ of positive bounded measures is a **convolution semigroup** if
+$$\mu_t\ast\mu_s=\mu_{t+s}\ \ \text{for all } t,s>0,\qquad \lim_{t\to 0}\mu_t=\delta .$$
+Intuition: running the process for $t$ then $s$ is the same as running it for $t+s$; and at
+time $0$ nothing has happened yet. This is the Markov/Chapman–Kolmogorov property. It is
+trivial to check here, because in the Fourier domain it reads
+$e^{-t\psi}\cdot e^{-s\psi}=e^{-(t+s)\psi}$.
+
+#### 7. Probability measures: positivity + normalization
+
+For $Z_t$ to be a *probability distribution* it needs two things:
+
+- **Normalization:** $\sum_n Z_t(n)=1$. This is automatic: $\sum_n Z_t(n)=\mathcal{F}(Z_t)(0)=e^{-t\psi(0)}=1$.
+- **Positivity:** $Z_t(n)\ge 0$ for all $n$. This is **not** automatic, and it is where all
+  the subtlety lives.
+
+Positivity is exactly a statement of **Bochner's theorem**: a function is the Fourier
+transform of a positive measure iff it is *positive definite*. So we need $e^{-t\psi}$ to be
+positive definite.
+
+#### 8. Negative definite functions (the real hypothesis)
+
+A function $\varphi:\mathbb{Z}_N\to\mathbb{C}$ is **negative definite** if
+$$\sum_{i,j=1}^{r}\Big(\varphi(m_i)+\varphi(m_j)^{*}-\varphi(m_i-m_j)\Big)\lambda_i\lambda_j^{*}\ge 0$$
+for all $m_1,\dots,m_r\in\mathbb{Z}_N$, $\lambda_1,\dots,\lambda_r\in\mathbb{C}$
+(the $*$ denotes complex conjugate). Intuition: it is the abstract shape of a *squared
+distance* — the prototype is $\varphi(x)=|x|^2$, and the quadratic form above is the
+"energy" version of that. Its role here is the **Schoenberg correspondence**:
+$$\psi \text{ is negative definite} \iff e^{-t\psi} \text{ is positive definite for every } t>0.$$
+Chaining with Bochner: *$\psi$ negative definite $\Rightarrow$ $e^{-t\psi}$ positive definite
+$\Rightarrow$ (Bochner) $Z_t=\mathcal{F}^{-1}(e^{-t\psi})$ is a positive measure.* On the
+finite abelian group this condition has a concrete form, the **Lévy–Khinchin cone**:
+$$\psi(m)=\sum_{k=1}^{\lfloor N/2\rfloor} c_k\big(1-\cos(2\pi km/N)\big),\qquad c_k\ge 0 .$$
+Two immediate consequences, both used below: $\psi$ must be **even**, $\psi(m)=\psi(N-m)$, and
+its "Fourier coefficients" $c_k$ must be non-negative. Conditions (i)–(ii) on $\psi$ alone are
+**not** sufficient for any of this.
+
+#### 9. Feller semigroup: the operator that applies the process
+
+Instead of tracking distributions, track how the process acts on functions. Define
+$$T_t z(n):=(Z_t\ast z)(n)\qquad(t>0),\qquad T_0:=I .$$
+The family $(T_t)_{t\ge 0}$ is a **Feller semigroup** (adapted to the finite setting) if
+
+- (i) $T_tT_s=T_{t+s}$ and $T_0=I$ (semigroup);
+- (ii) $\|T_t z-z\|\to 0$ as $t\to 0$ (strong continuity — nothing jumps at $t=0$);
+- (iii) $0\le z\le 1\ \Rightarrow\ 0\le T_tz\le 1$ (positivity / no new mass).
+
+Intuition: $T_t$ is "expectation after time $t$". Property (i) is the Markov property,
+(ii) says the process starts where you put it, and (iii) says probabilities stay
+probabilities. The paper proves $\|T_t\|\le 1$ (contractivity) and all three properties
+(Lemmas 4–6, Thm 3).
+
+#### 10. Generator and pseudo-differential operator
+
+For a semigroup, the **generator** is the time derivative at $t=0$:
+$A=\frac{d}{dt}T_t\big|_{t=0}$. It is the "instantaneous rate of change" — for a Markov
+chain it is the rate matrix (the $Q$ of a CTMC). Here, differentiating
+$\mathcal{F}(T_tz)(m)=e^{-t\psi(m)}\mathcal{F}(z)(m)$ gives
+$$A_\psi z=-\mathcal{F}^{-1}\!\big(\psi\cdot\mathcal{F}(z)\big),
+  \qquad\text{i.e. } A_\psi=-\mathcal{F}^{-1}\psi\,\mathcal{F}.$$
+A **pseudo-differential operator** is exactly this: an operator defined not by derivatives in
+space but by multiplying by a *symbol* ($\psi$) in the Fourier domain. "Pseudo-differential"
+here just means "Fourier multiplier". The evolution equation it generates,
+$\partial_t u = A_\psi u$, is the discrete heat/diffusion equation; its solution is
+$u(t)=T_t u(0)$.
+
+#### 11. Dissipative, $m$-dissipative, self-adjoint
+
+These three words are the guarantees that the equation is *physically sensible and numerically
+stable*:
+
+- **Dissipative:** $\|w-\lambda Aw\|\ge\|w\|$ for all $\lambda>0$. Equivalently (Lumer–Phillips)
+  $\operatorname{Re}(Az,z)\le 0$: the operator never *injects* energy. For $A_\psi$ this is one
+  line of Parseval:
+  $$(A_\psi z,z)=-\frac{1}{N}\sum_{m}\psi(m)\,|\mathcal{F}(z)(m)|^2\le 0,$$
+  because $\psi\ge 0$. Each frequency's energy decays; none grows.
+- **$m$-dissipative:** dissipative *and* the equation $w-\lambda Aw=z$ is solvable for every
+  $z$ and $\lambda>0$. The "$m$" (maximal) part rules out pathologies: it is the hypothesis of
+  the Lumer–Phillips theorem guaranteeing that $A$ really is the generator of a contraction
+  semigroup, so the flow exists for all time and is unique.
+- **Self-adjoint:** $(A_\psi z,w)=(z,A_\psi w)$. In the Fourier basis this is just "multiply by
+  the *real* number $-\psi(m)$" on each mode. Self-adjointness is why the kernel matrices are
+  symmetric and the spectrum is real, and it is what makes the numerics well-behaved.
+
+#### 12. The dictionary
+
+| Machine-learning / diffusion object | This paper's object |
+| --- | --- |
+| forward kernel $Q_t$ (one step) | heat kernel $Z_t=\mathcal{F}^{-1}(e^{-t\psi})$ |
+| cumulative marginal $q(x_t\mid x_0)$ | $Z_t(x_t-x_0)$ (a convolution kernel) |
+| forward schedule $\beta_t$, $\bar\alpha_t$ | time $t$ plus the dispersion $\psi$; spectrum $e^{-t\psi}$ |
+| eigenvalues of the forward kernel | $e^{-t\psi(m)}$ |
+| CTMC rate matrix / generator | $A_\psi=-\mathcal{F}^{-1}\psi\,\mathcal{F}$ |
+| noise type (Gaussian, uniform, jumps) | the choice of $\psi$ |
+| maximally mixing (uniform) kernel | $\psi=\text{const}$ on $m\neq 0$ |
+| D3PM's discretized-Gaussian kernel | $\psi(m)=2(1-\cos(2\pi m/N))$ |
+
+### The paper's construction, step by step
+
+1. **Setup (§2).** $L^2(\mathbb{Z}_N)=\mathbb{C}^N$; inner product; Fourier transform and its
+   inverse; $\delta$; convolution. Establishes that $\mathcal{F}^{-1}\mathcal{F}=I$.
+2. **Measures from $e^{-t\psi}$ (§3).** Fix $\psi$ with (i)–(ii). Define
+   $Z_t=\mathcal{F}^{-1}(e^{-t\psi})$. Show $Z_t\ge 0$ (Lemma 1, via Bochner/positive
+   definiteness), $\sum_n Z_t(n)=1$ (Lemma 2, via $\mathcal{F}(Z_t)(0)=e^{-t\psi(0)}=1$), hence
+   $Z_t$ is a probability measure for every $t\ge 0$ (Thm 1). Illustration: $N=5$,
+   $\psi(m)=m^2$, mass spreading from $n=0$ as $t$ grows (Figs. 1–2).
+3. **Convolution semigroup (§4).** $Z_t\ast Z_s=Z_{t+s}$ (Lemma 3) by the convolution theorem;
+   therefore $(Z_t)$ is a convolution semigroup (Prop 1). Then the negative-definiteness
+   statement (Thm 2) — the step that ties the construction to classical Lévy theory. Also
+   records that $\mathbb{Z}_N$ is a compact locally compact abelian group, which is why the
+   classical machinery applies.
+4. **Feller semigroup (§5).** Define $T_tz=Z_t\ast z$. Prove $T_t$ is well-defined, linear,
+   bounded with $\|T_t\|\le 1$ (Lemma 4); $T_tT_s=T_{t+s}$ (Lemma 5); positivity
+   $0\le z\le 1\Rightarrow 0\le T_tz\le 1$ (Lemma 6); strong continuity (Remark 6). Conclude
+   $(T_t)$ is a Feller semigroup (Thm 3).
+5. **The generator (§6).** Define $A_\psi=-\mathcal{F}^{-1}(\psi\,\mathcal{F})$. Prove
+   dissipativity by Parseval (Lemma 7), self-adjointness (Lemma 8), hence $m$-dissipativity
+   (Thm 4). Illustration: $N=5$, $\psi(m)=m^2$, $z=\delta$, giving
+   $A_\psi z(0)=-6$ and conjugate-symmetric complex values elsewhere (Ex. 3, Table 1, Fig. 4).
+
+### Worked example, and a correction
+
+The paper's running illustration is $\mathbb{Z}_5$ with $\psi(m)=m^2$ (Examples 1–3). **That
+$\psi$ is not admissible**, and the failure is easy to check by hand:
+
+- $\psi$ must be even ($\psi(m)=\psi(N-m)$, from the requirement that $e^{-t\psi}$ be positive
+  definite). But $\psi(1)=1$ while $\psi(4)=16$. So $Z_t$ comes out **complex** — direct
+  computation at $t=1$ gives $\max_n|\operatorname{Im} Z_t(n)|\approx 0.072$ — and a complex
+  "probability" contradicts the paper's own Lemma 1. Example 2's
+  $\psi(m)=1+\sin(2\pi m/5)$ has the same defect ($\psi(1)=1.951$ vs $\psi(4)=0.049$).
+- Even symmetrizing to $\psi(m)=\min(m,N-m)^2$ is not enough: fitting it into the
+  Lévy–Khinchin cone gives $c_2<0$, and indeed $Z_t$ then dips to $-0.011$ near $t\approx0.14$.
+- The **correct** "quadratic" dispersion on $\mathbb{Z}_N$ is the cycle-Laplacian symbol
+  $$\psi(m)=2\big(1-\cos(2\pi m/N)\big),$$
+  which is negative definite ($c_1=2$, all other $c_k=0$) and reduces to $(2\pi m/N)^2$ for
+  small $m$ — the discrete analogue of the Gaussian's $k^2$. Its kernel is real and
+  non-negative for all $t$, and its eigenvalues are exactly $e^{-\psi(m)}$.
+- As a sanity check on the other end, $\psi=\text{const}$ on $m\neq 0$ gives the maximally
+  mixing kernel $Z_t=e^{-t}\delta+(1-e^{-t})\,\text{uniform}$ — i.e. Hoogeboom's uniform
+  replacement, in continuous time.
+
+All of this is verified numerically in `experiments/check-dispersion-example.py`
+(`python3 experiments/check-dispersion-example.py`), which reports the failure of the paper's
+examples and the admissibility of the Laplacian and uniform choices.
+
+The lesson is the paper's own implicit one: **conditions (i)–(ii) on $\psi$ are not enough —
+negative definiteness is the real hypothesis**, and it is not just a technicality (it is
+what forces evenness and the non-negative $c_k$). The framework (Thms 1, 3, 4) is sound;
+the illustration picked $\psi$ outside its domain.
+
+### Bridge to discrete diffusion models
+
+- **This is the forward process, abstracted.** A translation-invariant forward chain with
+  kernels $Q_1,Q_2,\dots$ is the discrete-time shadow of a convolution semigroup: the
+  cumulative kernel $\bar Q_t$ is $Z_t$ for the right $\psi$, and the "schedule" is the map
+  $t\mapsto\psi$ together with how $t$ advances. In D3PM's terms, the transition matrix is a
+  **circulant** matrix and $e^{-t\psi}$ is its spectrum.
+- **The kernel is chosen by choosing a spectrum.** This reframes the design question. Instead
+  of inventing a transition matrix, pick the decay profile $\psi$: constant $\Rightarrow$
+  uniform mixing (no structure); $2(1-\cos)$ $\Rightarrow$ local Gaussian-like smoothing;
+  larger powers $\Rightarrow$ more local; non-smooth $\psi$ $\Rightarrow$ Lévy-type jumps. This
+  is precisely the "which discrete state spaces admit a noise formulation" taxonomy from
+  paper 2, now with an explicit spectral parameterization.
+- **The generator is the rate matrix.** $A_\psi$ is the CTMC generator of the forward chain.
+  Papers 7 (concrete score matching) and 10 (SEDD) work with the *continuous-time* CTMC view
+  and learn the reverse rates; this paper supplies the forward half rigorously, for the
+  translation-invariant (abelian) case.
+- **Why non-abelian groups are hard, made precise.** For abelian $G$ the dual is again a group
+  of scalars, so $\mathcal{F}$ turns the kernel into $N$ independent scalars $e^{-t\psi(m)}$.
+  For non-abelian $G$ the Fourier transform is **matrix-valued** (irreducible representations
+  are matrices), so there is no single real-valued dispersion function $\psi$ and the
+  generator is not diagonalized by scalars. That is exactly the obstruction the paper names as
+  future work, and the reason the $S_n$/Lie-group literature (see the group-diffusion
+  subsection under paper 2) resorts to random-walk mixing theory and structured reverse
+  parameterizations instead of a spectral closed form.
+
+### Sharp edges and open questions
+
+- **Theorem 2's wording looks inverted.** As printed, it says $e^{-t\psi}$ is *negative*
+  definite. The standard statement — Schoenberg's correspondence, the same one behind
+  Lévy–Khinchin on groups, where a convolution semigroup of probability measures has
+  $\mathcal{F}(\mu_t)=e^{-t\eta}$ with $\eta$ *negative definite* — is: **$\psi$ is negative
+  definite iff $e^{-t\psi}$ is positive definite for all $t>0**. With that reading the proof
+  chain is exactly right (positive definiteness is what Bochner needs); as written it is
+  likely a slip. Flagged rather than asserted — it does not affect Theorems 1, 3, 4.
+- **The admissibility hypothesis is understated.** The paper's standing assumptions on $\psi$
+  are only (i)–(ii), but Theorems 1/3 need $\psi$ negative definite. The worked examples
+  violate it (above).
+- **Forward-only.** No reverse process, no ELBO, no score, no learning, no ML evaluation. The
+  generative machinery is entirely in papers 4, 7, 10.
+- **Abelian and cyclic only.** $\mathbb{Z}_N$ (and it gestures at general finite abelian $G$).
+  Non-abelian and $p$-adic extensions are stated as future work, not delivered.
+- **"Harmonic flow" is a framing word.** The title's phrase is not given a separate formal
+  definition in the body; it names these Fourier-diagonalized evolution families.
+- **Sub-probabilities allowed.** Definition 3 permits $\mu_t(\mathbb{Z}_N)\le 1$ (possibly
+  killing mass); the specific $Z_t$ built in §3 is normalized to $1$, so this is a harmless
+  generality here but a difference from the diffusion setting, where the forward process
+  conserves total mass.
+- **Continuous time vs discrete steps.** The paper's $t$ is a continuous parameter and $Z_t$ is
+  the exact kernel at time $t$. Diffusion models use a finite step schedule; the correspondence
+  is that each step is $Z_{\Delta t}$ for some increment, or equivalently the continuous-time
+  chain whose generator is $A_\psi$. The paper does not discuss discretization error.
+
+**If you remember one thing:** a translation-invariant diffusion on a finite group is a
+convolution, convolution is diagonal in the group Fourier basis, so the whole forward process
+is *one non-negative even function $\psi$* — its spectrum $e^{-t\psi}$ — and the generator is
+the Fourier multiplier $-\psi$.
+
 

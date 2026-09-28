@@ -126,3 +126,20 @@ This is handled by the `md-to-html` skill. The Markdown files are canonical;
 - **2026-09-27** — Added references A3–A16 (group diffusion) to
   `sources/foundational-papers.md` and their verified records to
   `sources/raw/group-diffusion-refs.json`. `html/` regenerated.
+- **2026-09-27** — Added **paper 3**: *Harmonic flows and Markov dynamics on finite groups via
+  pseudo-differential operators* (Torresblanca-Badillo, Barrios-Garizao & Quiñonez-Martínez;
+  J. Pseudo-Differ. Oper. Appl. 17(1), Art. 18, 2026; DOI `10.1007/s11868-025-00759-7`).
+  Written **from first principles** (no operator theory assumed): a from-zero primer on the
+  toolkit — functions on Z_N, convolution, the Fourier transform as the diagonalizer,
+  convolution semigroups, negative definite functions / Lévy–Khinchin, Feller semigroups,
+  generators, pseudo-differential operators, dissipativity and self-adjointness — followed by
+  the paper's construction step by step, the bridge to discrete diffusion models, and caveats.
+  The walkthrough was renumbered from 10 to 11 papers: the reading order is now a **study
+  order**, and D3PM is paper 4. `html/` regenerated.
+- **2026-09-27** — Added `experiments/check-dispersion-example.py`, a reproducible check of the
+  new paper's dispersion-function conditions. It shows the paper's worked example
+  (psi(n)=n^2 on Z_5) is **not admissible** — psi is not even, so Z_t is complex and cannot be
+  a probability measure — and that even the symmetrized min(m,N-m)^2 fails the Lévy–Khinchin
+  cone (c_2 < 0). The admissible quadratic dispersion is the cycle-Laplacian symbol
+  2(1-cos(2*pi*m/N)). Written up as a correction in the paper 3 entry; A7 in
+  `sources/foundational-papers.md` now points to it.
