@@ -31,6 +31,13 @@ written. No experiments yet.
 - `notes/2026-09-27-overview.md` — high-level map of the field: the two formalisms
   (discrete-time Markov vs. continuous-time CTMC), the corruption-kernel design axis,
   and a short history.
+- `notes/group-theory-primer.md` — group theory from zero, at the depth this topic needs:
+  groups and the four axioms, the recurring examples ($\mathbb{Z}_N$, $(\mathbb{Z}_2)^n$,
+  $\mathbb{Z}$, $S_n$, $SO(3)$, $SE(3)$), Cayley graphs, abelian vs non-abelian (the line
+  between a scalar dispersion $\psi$ and matrix-valued representations), characters and the
+  dual group, convolution as translation-invariance, random walks as the forward diffusion
+  process, why absorbing/mask is *not* a group, Lie groups, and the group-as-state-space
+  vs group-as-symmetry trap.
 
 ## Layout
 
@@ -143,3 +150,14 @@ This is handled by the `md-to-html` skill. The Markdown files are canonical;
   cone (c_2 < 0). The admissible quadratic dispersion is the cycle-Laplacian symbol
   2(1-cos(2*pi*m/N)). Written up as a correction in the paper 3 entry; A7 in
   `sources/foundational-papers.md` now points to it.
+- **2026-09-27** — Added `notes/group-theory-primer.md`: group theory built from zero at the
+  depth this topic needs — the four axioms; the recurring examples ($\mathbb{Z}_N$,
+  $(\mathbb{Z}_2)^n$, $\mathbb{Z}$, $S_n$, $SO(3)$, $SE(3)$) and the labelling caveat; the
+  Cayley graph as the walk's geometry; abelian vs **non-abelian** (the line between a scalar
+  dispersion $\psi$ and matrix-valued representations, i.e. why $S_n$/$SO(3)$ have no
+  spectral closed form); homomorphisms, characters and the dual group ("frequency" =
+  character); convolution as translation-invariance; the random walk as the forward diffusion
+  process, with a three-line derivation of Hoogeboom's symbol $1-\beta$; why absorbing/mask is
+  *not* a group translation and how the sub-probability slack in paper 3's definition connects
+  to it; Lie groups; and the group-as-state-space vs group-as-symmetry trap. Cross-linked from
+  paper 2's group-diffusion section and paper 3's operator primer. `html/` regenerated.

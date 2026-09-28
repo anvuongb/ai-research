@@ -517,6 +517,12 @@ which is exactly why masked diffusion collapses to a plain cross-entropy.
 
 ### Cross-cutting: group diffusion (the translation-invariant family)
 
+> **New to groups?** → [`group-theory-primer.md`](group-theory-primer.md) builds the algebra
+> from zero (what a group is, abelian vs non-abelian, characters and the dual group,
+> convolution as translation-invariance, random walks as the forward process, why
+> absorbing/mask is *not* a group, Lie groups, and the group-as-state-space
+> vs group-as-symmetry trap).
+
 The taxonomy above listed "group $G$" as a single row. This section expands it, because it is
 the one place where discrete diffusion keeps a genuine **additive-noise** picture — and
 because paper 2's own kernel turns out to be the *degenerate* member of the family.
@@ -743,6 +749,9 @@ experiments and never constructs a generative model.
 
 Nothing below assumes prior operator theory. Each notion gets the one-line intuition first,
 then the formal statement, then why we care.
+
+> **Algebra background:** group theory itself — the thing $\psi$ is a function *of* — is
+> built from zero in [`group-theory-primer.md`](group-theory-primer.md).
 
 #### 1. The state space is a group, so "noise" means "translation"
 
