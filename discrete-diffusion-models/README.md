@@ -108,3 +108,9 @@ This is handled by the `md-to-html` skill. The Markdown files are canonical;
 - **2026-09-27** — Added the two new references (Analog Bits 2208.04202, Dirichlet
   Diffusion 2305.10699) to `sources/foundational-papers.md` under “Additional references”.
   `html/` regenerated.
+- **2026-09-27** — Published the workspace to GitHub Pages. Repo
+  [`anvuongb/ai-research`](https://github.com/anvuongb/ai-research) (public); a repo-level
+  Actions workflow (`.github/workflows/pages.yml`) renders all Markdown at the root and
+  deploys it. **Live site:** <https://me.anvuong.dev/ai-research/> (the account's custom
+  domain; `anvuongb.github.io/ai-research/` redirects there). `html/` is gitignored and
+  rebuilt in CI.
